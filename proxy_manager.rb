@@ -3,10 +3,13 @@ require "net/ping"
 class ProxyManager
   attr_reader :proxy, :proxies
 
-  def initialize(input = "proxies.txt")
-    import_from input
+  def initialize(proxies = "proxies.txt", bad_proxies = "bad_proxies.txt")
+    @proxies = Array.new
+    @bad_proxies = Array.new
+
+    import_from proxies
     get_proxy
-    save_proxies_source input
+    save_proxies_sources proxies, bad_proxies
   end
 
   def connectable?(proxy)
@@ -15,10 +18,8 @@ class ProxyManager
 
   private
 
-    def import_from(input)
-      @proxies = Array.new
-
-      File.open(input, "r").each do |line|
+    def import_from(proxies)
+      File.open(proxies, "r").each do |line|
         proxy = line.chomp.split(":")
         @proxies << [proxy[0],proxy[1]] if proxy[0].kind_of?(String) && proxy[1].kind_of?(String)
       end
@@ -31,15 +32,29 @@ class ProxyManager
           @proxies.delete_at(key)
           @proxies << @proxy
           break
+        else
+          # move proxy to bad list
+          @proxies.delete_at(key)
+          @bad_proxies << proxy
         end
       end
     end
 
-    def save_proxies_source(input)
-      File.open(input, "w+") do |f|
+    def save_proxies_sources(proxies, bad_proxies)
+      File.open(proxies, "w+") do |f|
         @content = String.new
 
         @proxies.each do |proxy|
+          @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
+        end
+
+        f.write(@content)
+      end
+
+      File.open(bad_proxies, "w+") do |f|
+        @content = String.new
+
+        @bad_proxies.each do |proxy|
           @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
         end
 
