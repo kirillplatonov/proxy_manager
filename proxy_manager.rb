@@ -1,7 +1,7 @@
 require "net/ping"
 
 class ProxyManager
-  attr_reader :proxy, :proxies
+  attr_reader :proxy, :proxies, :bad_proxies
 
   def initialize(proxies = "proxies.txt", bad_proxies = "bad_proxies.txt")
     @proxies = Array.new
@@ -11,7 +11,7 @@ class ProxyManager
 
     import_from proxies
     get_proxy
-    save_proxies_sources "proxies", "bad_proxies"
+    save_proxies_sources proxies, bad_proxies
   end
 
   def connectable?(proxy)
@@ -44,17 +44,25 @@ class ProxyManager
       raise "Proxy list is empty!" if @proxy.nil?
     end
 
-    def save_proxies_sources(*args)
-      args.each do |arg|
-        File.open("#{arg}.txt", "w+") do |f|
-          @content = String.new
+    def save_proxies_sources(proxies, bad_proxies)
+      File.open(proxies, "w+") do |f|
+        @content = String.new
 
-          instance_variable_get(("@" + arg).intern).each do |proxy|
-            @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
-          end
-
-          f.write(@content)
+        @proxies.each do |proxy|
+          @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
         end
+
+        f.write(@content)
+      end
+
+      File.open(bad_proxies, "w+") do |f|
+        @content = String.new
+
+        @bad_proxies.each do |proxy|
+          @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
+        end
+
+        f.write(@content)
       end
     end
 end
