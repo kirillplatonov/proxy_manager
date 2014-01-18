@@ -7,6 +7,8 @@ class ProxyManager
     @proxies = Array.new
     @bad_proxies = Array.new
 
+    raise "File with proxies list not founded!" if !File.exists?(proxies)
+
     import_from proxies
     get_proxy
     save_proxies_sources "proxies", "bad_proxies"
