@@ -6,6 +6,7 @@ class ProxyManager
   def initialize(input = "proxies.txt")
     import_from input
     get_proxy
+    save_proxies_source input
   end
 
   def connectable?(proxy)
@@ -16,11 +17,10 @@ class ProxyManager
 
     def import_from(input)
       @proxies = Array.new
-      source = input.is_a?(Array) ? input : File.open(input, "r")
 
-      source.each do |line|
-        proxy = line.split(":")
-        @proxies << [proxy[0],proxy[1]]
+      File.open(input, "r").each do |line|
+        proxy = line.chomp.split(":")
+        @proxies << [proxy[0],proxy[1]] if proxy[0].kind_of?(String) && proxy[1].kind_of?(String)
       end
     end
 
@@ -30,7 +30,20 @@ class ProxyManager
           @proxy = proxy
           @proxies.delete_at(key)
           @proxies << @proxy
+          break
         end
+      end
+    end
+
+    def save_proxies_source(input)
+      File.open(input, "w+") do |f|
+        @content = String.new
+
+        @proxies.each do |proxy|
+          @content << "#{proxy[0]}:#{proxy[1]}\n" if !proxy.empty?
+        end
+
+        f.write(@content)
       end
     end
 end
