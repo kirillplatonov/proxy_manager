@@ -1,4 +1,4 @@
-# Proxy Manager
+# Ruby Proxy Manager
 This is the class for easy usage proxy in parser/web bots. It will help you to save your proxies from block and will check proxy availability for you.
 For use it needs to create a list of proxies in IP:PORT format and pass it to ProxyManager.
 ### Usage
