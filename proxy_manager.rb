@@ -1,9 +1,15 @@
+require "net/ping"
+
 class ProxyManager
   attr_reader :proxy, :proxies
 
   def initialize(input = "proxies.txt")
     import_from input
     get_proxy
+  end
+
+  def connectable?(proxy)
+    return Net::Ping::TCP.new(proxy[0], proxy[1]).ping
   end
 
   private
@@ -19,9 +25,12 @@ class ProxyManager
     end
 
     def get_proxy
-      @proxy = @proxies[0]
-      # move first element to the end
-      @proxies.delete_at(0)
-      @proxies << @proxy
+      @proxies.each_with_index do |proxy, key|
+        if connectable? proxy
+          @proxy = proxy
+          @proxies.delete_at(key)
+          @proxies << @proxy
+        end
+      end
     end
 end
