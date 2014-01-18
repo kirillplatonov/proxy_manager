@@ -38,6 +38,8 @@ class ProxyManager
           @bad_proxies << proxy
         end
       end
+
+      raise "Proxy list is empty!" if @proxy.nil?
     end
 
     def save_proxies_sources(*args)
