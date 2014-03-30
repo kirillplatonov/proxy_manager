@@ -1,3 +1,7 @@
 .bundle/
 log/*.log
 pkg/
+Gemfile.lock
+tmp
+.yardoc/
+doc/
