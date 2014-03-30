@@ -8,13 +8,13 @@ Gem::Specification.new do |s|
   s.licenses    = ['MIT']
   s.email       = ["platonov.kd@gmail.com"]
   s.homepage    = "https://github.com/bloodyhistory/proxy_manager"
-  s.summary     = "Ruby proxy manager. Gem for easy usage proxy in parser/web bots."
+  s.summary     = "Ruby proxy manager for easy usage proxy in parser/web bots."
   s.description = <<-DESCRIPTION
-    This gem is for easy usage proxy in your parsers/web-bots. It will manage your proxy
-    list and check availability.
+    This gem is for easy usage proxy in your parsers/web-bots. It will manage
+    your proxy list and check availability.
   DESCRIPTION
 
-  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc", ".rspec"]
+  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'net-ping', '~> 1.7', '>= 1.7.2'
