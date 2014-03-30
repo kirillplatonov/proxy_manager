@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'net/ping'
 require 'proxy_manager'
 
 describe ProxyManager do

@@ -70,7 +70,6 @@ DEPENDENCIES
   fuubar
   growl
   guard-rspec
-  net-ping
   proxy_manager!
   rspec
   turn
