@@ -4,4 +4,3 @@ pkg/
 Gemfile.lock
 tmp
 .yardoc/
-doc/
