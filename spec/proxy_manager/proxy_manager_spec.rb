@@ -10,7 +10,7 @@ describe ProxyManager do
     let(:proxies_file) { File.join(subject.root, 'spec', 'support', 'proxies.txt') }
     let(:bad_proxies_file) { File.join(subject.root, 'spec', 'support', 'bad_proxies.txt') }
     let(:proxy) { subject.load(['0.0.1.0:9000', '0.0.0.1:2000', '0.0.0.0:7000']) }
-      
+
     it 'should return list' do
       expect(proxy.list).to match_array list
     end

@@ -1,5 +1,5 @@
 module ProxyManager
-  class ProxyManager
+  class Main
     attr_reader :list, :bad_list, :list_file, :bad_list_file
 
     def initialize(proxies, bad_proxies)
@@ -48,7 +48,7 @@ module ProxyManager
       end
 
       raise 'There are no available proxy' if items.empty?
-      
+
       if @list_file && @bad_list_file
         File.open(@list_file, "w+") do |f|
           source = ''
@@ -83,7 +83,7 @@ module ProxyManager
       end
 
       def load_list_from_file(proxies)
-        File.open(proxies, "r").each do |line|     
+        File.open(proxies, "r").each do |line|
           line = line.chomp.split(':')
           if line[0].is_a? String and line[1].is_a? String
             @list << [line[0], line[1].to_i]

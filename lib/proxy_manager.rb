@@ -1,4 +1,4 @@
-require 'proxy_manager/proxy_manager'
+require 'proxy_manager/main'
 
 module ProxyManager
   def self.root
@@ -6,6 +6,6 @@ module ProxyManager
   end
 
   def self.load(proxies, bad_proxies = nil)
-    ProxyManager.new(proxies, bad_proxies)
+    Main.new(proxies, bad_proxies)
   end
 end
