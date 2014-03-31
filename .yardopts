@@ -1,3 +1,4 @@
 --private
 --protected
--o doc/ruby
+--readme README.md
+--charset utf-8

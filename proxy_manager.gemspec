@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
     your proxy list and check availability.
   DESCRIPTION
 
-  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", ".yardopts", ".rspec"]
+  s.files       = `git ls-files`.split("\n") - %w[.gitignore .travis.yml]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'net-ping', '~> 1.7', '>= 1.7.2'

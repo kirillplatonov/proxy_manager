@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    proxy_manager (0.0.6)
+    proxy_manager (0.0.7)
       net-ping (~> 1.7, >= 1.7.2)
 
 GEM
