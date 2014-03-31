@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "proxy_manager"
-  s.version     = '0.0.8'
+  s.version     = '0.0.9'
   s.authors     = ["Kirill Platonov"]
   s.licenses    = ['MIT']
   s.email       = ["platonov.kd@gmail.com"]

@@ -16,6 +16,7 @@ module ProxyManager
         @list_file, @bad_list_file = proxies, bad_proxies
 
         load_list_from_file(proxies)
+        load_bad_list_from_file(bad_proxies)
       end
     end
 
@@ -28,12 +29,13 @@ module ProxyManager
       raise 'List is empty' if @list.empty?
 
       items = []
+      new_list = @list.clone
 
       @list.each_with_index do |proxy, key|
-        @list.delete_at(key)
+        new_list.shift
 
         if connectable? proxy
-          @list << proxy
+          new_list << proxy
 
           if count == 1
             items = proxy
@@ -46,6 +48,8 @@ module ProxyManager
           @bad_list << proxy
         end
       end
+
+      @list = new_list
 
       raise 'There are no available proxy' if items.empty?
 
@@ -87,6 +91,15 @@ module ProxyManager
           line = line.chomp.split(':')
           if line[0].is_a? String and line[1].is_a? String
             @list << [line[0], line[1].to_i]
+          end
+        end
+      end
+
+      def load_bad_list_from_file(bad_proxies)
+        File.open(bad_proxies, "r").each do |line|
+          line = line.chomp.split(':')
+          if line[0].is_a? String and line[1].is_a? String
+            @bad_list << [line[0], line[1].to_i]
           end
         end
       end
