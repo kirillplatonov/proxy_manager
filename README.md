@@ -1,10 +1,7 @@
 # Ruby Proxy Manager
-
 [![Gem Version](https://badge.fury.io/rb/proxy_manager.svg)](http://badge.fury.io/rb/proxy_manager)
-[![Dependency Status](https://gemnasium.com/bloodyhistory/proxy_manager.svg)](https://gemnasium.com/bloodyhistory/proxy_manager)
 [![Build Status](https://travis-ci.org/bloodyhistory/proxy_manager.svg?branch=master)](https://travis-ci.org/bloodyhistory/proxy_manager)
 [![Code Climate](https://codeclimate.com/github/bloodyhistory/proxy_manager.png)](https://codeclimate.com/github/bloodyhistory/proxy_manager)
-[![Coverage Status](https://coveralls.io/repos/bloodyhistory/proxy_manager/badge.png)](https://coveralls.io/r/bloodyhistory/proxy_manager)
 
 Easy manage proxy in your parsers/web-bots.
 
