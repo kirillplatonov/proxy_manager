@@ -1,8 +1,19 @@
 module ProxyManager
-  class Main
+  class Proxy
     attr_reader :list, :bad_list, :list_file, :bad_list_file
 
-    def initialize(proxies, bad_proxies)
+    # Create main object
+    # @param proxies [Array, String] array of proxies or file with proxies
+    # @param bad_proxies [String, nil] optional file for save bad proxies
+    # @example
+    #   # from array
+    #   proxy = ProxyManager::Proxy.new(['1.2.3.4:567', '9.8.7.6:543'])
+    #
+    #   # or from file
+    #   proxy = ProxyManager::Proxy.new('proxies.txt', 'bad_proxies.txt')
+    # @return [Class] Main object
+    # @see Main
+    def initialize(proxies, bad_proxies = nil)
       @list = []
       @bad_list = []
 

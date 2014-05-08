@@ -35,13 +35,13 @@ $ gem install proxy_manager
 From array (IP:PORT)
 
 ```ruby
-proxy = ProxyManager.load(['1.2.3.4:567', '9.8.7.6:543'])
+proxy = ProxyManager::Proxy.new(['1.2.3.4:567', '9.8.7.6:543'])
 ```
 
 or from file
 
 ```ruby
-proxy = ProxyManager.load('proxies.txt', 'bad_proxies.txt')
+proxy = ProxyManager::Proxy.new('proxies.txt', 'bad_proxies.txt')
 ```
 
 Files `proxies.txt` and `bad_proxies.txt` should be writable.
