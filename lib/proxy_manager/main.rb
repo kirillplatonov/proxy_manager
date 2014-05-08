@@ -15,8 +15,8 @@ module ProxyManager
 
         @list_file, @bad_list_file = proxies, bad_proxies
 
-        load_list_from_file(proxies)
-        load_bad_list_from_file(bad_proxies)
+        @list = load_from_file(@list_file)
+        @bad_list = load_from_file(@bad_list_file)
       end
     end
 
@@ -54,27 +54,8 @@ module ProxyManager
       raise 'There are no available proxy' if items.empty?
 
       if @list_file && @bad_list_file
-        File.open(@list_file, "w+") do |f|
-          source = ''
-
-          @list.each_with_index do |p, index|
-            source << "#{p[0]}:#{p[1]}"
-            source << "\n" if @list[index + 1]
-          end
-
-          f.write(source)
-        end
-
-        File.open(@bad_list_file, "w+") do |f|
-          source = ''
-
-          @bad_list.each_with_index do |p, index|
-            source << "#{p[0]}:#{p[1]}"
-            source << "\n" if @bad_list[index + 1]
-          end
-
-          f.write(source)
-        end
+        save_to_file(@list_file, @list)
+        save_to_file(@bad_list_file, @bad_list)
       end
 
       items
@@ -82,26 +63,24 @@ module ProxyManager
 
     private
 
-      def load_list_from_array(proxies)
-        @list = proxies.map { |arg| [arg.split(':')[0], arg.split(':')[1].to_i] }
-      end
+    def load_list_from_array(proxies)
+      @list = proxies.map { |arg| [arg.split(':')[0], arg.split(':')[1].to_i] }
+    end
 
-      def load_list_from_file(proxies)
-        File.open(proxies, "r").each do |line|
-          line = line.chomp.split(':')
-          if line[0].is_a? String and line[1].is_a? String
-            @list << [line[0], line[1].to_i]
-          end
-        end
+    def load_from_file(file)
+      result = []
+      IO.readlines(file).each do |line|
+        ip, port = line.chomp.split(':')
+        result << [ip, port.to_i] if ip.is_a?(String) && port.is_a?(String)
       end
+      result
+    end
 
-      def load_bad_list_from_file(bad_proxies)
-        File.open(bad_proxies, "r").each do |line|
-          line = line.chomp.split(':')
-          if line[0].is_a? String and line[1].is_a? String
-            @bad_list << [line[0], line[1].to_i]
-          end
-        end
-      end
+    def save_to_file(file, list)
+      source = ''
+      list.each { |p| source << "#{p[0]}:#{p[1]}" }
+
+      IO.write(file, source.sub(/\\n$/, ''))
+    end
   end
 end
