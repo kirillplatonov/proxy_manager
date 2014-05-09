@@ -2,10 +2,13 @@ require 'spec_helper'
 require 'proxy_manager'
 
 describe ProxyManager::Proxy do
-  let(:list) { [['0.0.1.0', 9000], ['0.0.0.1', 2000], ['0.0.0.0', 7000]] }
-  let(:proxies_file) { File.join(ProxyManager.root, 'spec', 'support', 'proxies.txt') }
-  let(:bad_proxies_file) { File.join(ProxyManager.root, 'spec', 'support', 'bad_proxies.txt') }
-  let(:proxy) { ProxyManager::Proxy.new(['0.0.1.0:9000', '0.0.0.1:2000', '0.0.0.0:7000']) }
+  let(:list) { [['127.0.0.1', 80], ['127.0.0.1', 8080]] }
+  let(:proxies_file) { File.join(ProxyManager.root,
+                                 'spec',
+                                 'support',
+                                 'proxies.txt'
+                                ) }
+  let(:proxy) { ProxyManager::Proxy.new(['127.0.0.1:80', '127.0.0.1:8080']) }
 
   it 'should return list' do
     expect(proxy.list).to match_array list
@@ -39,10 +42,8 @@ describe ProxyManager::Proxy do
     end
   end
 
-  it { expect(proxy.bad_list).to be_a Array }
-
   context 'when load from file' do
-    let(:proxy) { ProxyManager::Proxy.new(proxies_file, bad_proxies_file) }
+    let(:proxy) { ProxyManager::Proxy.new(proxies_file) }
 
     it 'should return list' do
       expect(proxy.list).to match_array list
@@ -65,7 +66,6 @@ describe ProxyManager::Proxy do
 
       after do
         File.open(proxies_file, 'w').write(@source)
-        File.open(bad_proxies_file, 'w').truncate(0)
       end
     end
   end

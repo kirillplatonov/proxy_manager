@@ -1,33 +1,25 @@
 module ProxyManager
   class Proxy
-    attr_reader :list, :bad_list, :list_file, :bad_list_file
+    attr_reader :list
 
     # Create main object
     # @param proxies [Array, String] array of proxies or file with proxies
-    # @param bad_proxies [String, nil] optional file for save bad proxies
     # @example
     #   # from array
-    #   proxy = ProxyManager::Proxy.new(['1.2.3.4:567', '9.8.7.6:543'])
+    #   proxy = ProxyManager::Proxy.new(['127.0.0.1:80', '127.0.0.1:8080'])
     #
     #   # or from file
-    #   proxy = ProxyManager::Proxy.new('proxies.txt', 'bad_proxies.txt')
+    #   proxy = ProxyManager::Proxy.new('proxies.txt')
     # @return [Class] Main object
     # @see Main
-    def initialize(proxies, bad_proxies = nil)
+    def initialize(proxies)
       @list = []
-      @bad_list = []
 
       if proxies.is_a? Array
         load_list_from_array(proxies)
       else
-        if proxies.empty? or bad_proxies.empty?
-          raise 'Both arguments "proxies" and "bad_proxies" required'
-        end
-
-        @list_file, @bad_list_file = proxies, bad_proxies
-
+        @list_file = proxies
         @list = load_from_file(@list_file)
-        @bad_list = load_from_file(@bad_list_file)
       end
     end
 
@@ -55,8 +47,6 @@ module ProxyManager
             items << proxy
             break if items.size == count
           end
-        else
-          @bad_list << proxy
         end
       end
 
@@ -64,10 +54,7 @@ module ProxyManager
 
       raise 'There are no available proxy' if items.empty?
 
-      if @list_file && @bad_list_file
-        save_to_file(@list_file, @list)
-        save_to_file(@bad_list_file, @bad_list)
-      end
+      save_to_file(@list_file, @list) if @list_file
 
       items
     end
@@ -89,9 +76,9 @@ module ProxyManager
 
     def save_to_file(file, list)
       source = ''
-      list.each { |p| source << "#{p[0]}:#{p[1]}" }
+      list.each { |p| source << "#{p[0]}:#{p[1]}\n" }
 
-      IO.write(file, source.sub(/\\n$/, ''))
+      IO.write(file, source.sub(/\n$/, ''))
     end
   end
 end

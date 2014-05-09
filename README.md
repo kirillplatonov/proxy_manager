@@ -35,21 +35,21 @@ $ gem install proxy_manager
 From array (IP:PORT)
 
 ```ruby
-proxy = ProxyManager::Proxy.new(['1.2.3.4:567', '9.8.7.6:543'])
+proxy = ProxyManager::Proxy.new(['127.0.0.1:80', '127.0.0.1:8080'])
 ```
 
 or from file
 
 ```ruby
-proxy = ProxyManager::Proxy.new('proxies.txt', 'bad_proxies.txt')
+proxy = ProxyManager::Proxy.new('proxies.txt')
 ```
 
 Files `proxies.txt` and `bad_proxies.txt` should be writable.
 Example of `proxies.txt` content:
 
 ```
-1.2.3.4:567
-9.8.7.6:543
+127.0.0.1:80
+127.0.0.1:8080
 ...
 ```
 
@@ -59,14 +59,14 @@ Get one proxy
 
 ```ruby
 proxy.get
-# => ["1.2.3.4", 567]
+# => ["127.0.0.1", 80]
 ```
 
 Get many proxies
 
 ```ruby
 proxy.get(2)
-# => [["1.2.3.4", 567], ["9.8.7.6", 543]]
+# => [["127.0.0.1", 80], ["127.0.0.1", 8080]]
 ```
 
 Will be returning only pingable proxies
@@ -77,14 +77,7 @@ You also can display list of loaded proxies
 
 ```ruby
 proxy.list
-# => [["1.2.3.4", 567], ["9.8.7.6", 543]]
-```
-
-and list of bad proxies
-
-```ruby
-proxy.bad_list
-# => []
+# => [["127.0.0.1", 80], ["127.0.0.1", 8080]]
 ```
 
 ## Documentation
