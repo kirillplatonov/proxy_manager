@@ -2,16 +2,6 @@ module ProxyManager
   class Proxy
     attr_reader :list
 
-    # Create main object
-    # @param proxies [Array, String] array of proxies or file with proxies
-    # @example
-    #   # from array
-    #   proxy = ProxyManager::Proxy.new(['127.0.0.1:80', '127.0.0.1:8080'])
-    #
-    #   # or from file
-    #   proxy = ProxyManager::Proxy.new('proxies.txt')
-    # @return [Class] Main object
-    # @see Main
     def initialize(proxies)
       @list = []
 
