@@ -44,7 +44,8 @@ or from file
 proxy = ProxyManager::Proxy.new('proxies.txt')
 ```
 
-Files `proxies.txt` and `bad_proxies.txt` should be writable.
+File with proxy list (in this case `proxies.txt`) should be readable and
+writable.
 Example of `proxies.txt` content:
 
 ```
@@ -55,34 +56,60 @@ Example of `proxies.txt` content:
 
 ### Get proxy
 
-Get one proxy
+There is two methods to get proxy.
+
+First method return just next proxy, without any checking for availability:
 
 ```ruby
 proxy.get
 # => ["127.0.0.1", 80]
 ```
 
-Get many proxies
+Band method return **only HTTP-available proxy**. It's perfect if you don't
+realy confidency on actuallity of your proxy list:
+
+```ruby
+proxy.get!
+# => ["127.0.0.1", 8080]
+```
+
+You can also get for than one proxy per request by adding count for both
+methods like this:
 
 ```ruby
 proxy.get(2)
 # => [["127.0.0.1", 80], ["127.0.0.1", 8080]]
+
+proxy.get!(2)
+# => [["127.0.0.1", 80], ["127.0.0.1", 8080]]
 ```
 
-Will be returning only pingable proxies
+### Proxies list
 
-### Proxies lists
-
-You also can display list of loaded proxies
+For display list of loaded proxies use `list` method:
 
 ```ruby
 proxy.list
 # => [["127.0.0.1", 80], ["127.0.0.1", 8080]]
 ```
 
+### Checking proxy manually
+
+You can also use class method for checking availability manually like this:
+
+```ruby
+# by passing a string
+ProxyManager::Proxy.connectable?('127.0.0.1:80')
+# => false
+
+# or by passing an array
+ProxyManager::Proxy.connectable?('127.0.0.1', 80)
+# => false
+```
+
 ## Documentation
 
-http://rubydoc.info/gems/proxy_manager/frames
+http://rubydoc.info/gems/proxy_manager
 
 ## Contributing
 
