@@ -1,5 +1,4 @@
 require 'proxy_manager/proxy'
-require 'net/ping'
 
 module ProxyManager
   def self.root
