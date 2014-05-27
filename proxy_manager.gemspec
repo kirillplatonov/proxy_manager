@@ -10,8 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/bloodyhistory/proxy_manager"
   s.summary     = "This is gem for easy usage proxy in your parsers/web-bots."
   s.description = <<-DESCRIPTION
-    This is gem for easy usage proxy in your parsers/web-bots.
-    It will manage your proxy list and check availability if you need it.
+    Proxy manager for easy usage proxy in your parsers/web-bots
   DESCRIPTION
 
   s.files       = `git ls-files`.split("\n") - %w[.gitignore .travis.yml]
