@@ -107,6 +107,8 @@ ProxyManager::Proxy.connectable?('127.0.0.1', 80)
 # => false
 ```
 
+Please, don't forget to star :star: the repository if you like (and use) the plugin. This will let me know how many users it has and then how to proceed with further development :).
+
 ## Documentation
 
 http://rubydoc.info/gems/proxy_manager
